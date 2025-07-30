@@ -1,0 +1,68 @@
+# Compilación y salida
+bin/
+obj/
+out/
+
+# Archivos de usuario de VS/VSCode
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# Archivos generados por Rider o JetBrains
+.idea/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Paquetes NuGet descargados
+packages/
+*.nupkg
+*.snupkg
+
+# Logs y bases de datos locales
+*.log
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+
+# Archivos de publicación
+publish/
+App_Data/
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+
+# Configuraciones locales de entorno
+.env
+*.secret
+*.local.json
+secrets.json
+
+# Migrations (si no quieres versionarlas)
+# Migrations/
+
+# Archivos de configuración de usuario
+*.dotCover
+*.vspscc
+*.vssscc
+
+# dotnet CLI artefactos
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider cache
+.idea/
+*.sln.iml
+
+# Archivos de prueba
+TestResults/
+coverage/
