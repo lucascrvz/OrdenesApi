@@ -58,7 +58,7 @@ public class ProductosController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GettAllProducts(int pageNumber = 1, int pageSize = 10)
+    public async Task<IActionResult> GetAllProducts(int pageNumber = 1, int pageSize = 10)
     {
         if (pageNumber < 1) pageNumber = 1;
         if (pageSize < 1) pageSize = 10;

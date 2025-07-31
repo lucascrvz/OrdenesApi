@@ -34,7 +34,7 @@ public class OrdenesControllerTests
         var dto = new CrearOrdenDTO
         {
             Cliente = "Cliente Test",
-            ProductoIds = new List<int>() // vacío
+            ProductoIds = new List<int>() 
         };
 
         // Act

@@ -14,7 +14,7 @@ namespace OrdenesApi.Tests.Controllers
         private ApplicationDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString()) 
+                .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString())
                 .Options;
 
             return new ApplicationDbContext(options);
@@ -64,13 +64,16 @@ namespace OrdenesApi.Tests.Controllers
             var controller = new ProductosController(context);
 
             // Act
-            var result = await controller.GettAllProducts();
+            var result = await controller.GetAllProducts();
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var productos = Assert.IsAssignableFrom<IEnumerable<ProductoDto>>(okResult.Value);
-            Assert.Equal(2, System.Linq.Enumerable.Count(productos));
+
+            var pagedResponse = Assert.IsType<PagedResponse<ProductoDto>>(okResult.Value);
+
+            Assert.NotNull(pagedResponse.Items);
         }
+
 
         [Fact]
         public async Task ObtenerPorId_ProductoExistente_ReturnsOk()

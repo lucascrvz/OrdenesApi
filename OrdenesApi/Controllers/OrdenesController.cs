@@ -100,6 +100,9 @@ public class OrdenesController : ControllerBase
             Cliente = o.Cliente,
             FechaCreacion = o.FechaCreacion,
             Total = o.Total,
+            TotalBruto = o.TotalBruto,
+            Descuento = o.Descuento,
+            TiposDescuento = o.TiposDescuento.Split(",").ToList(),
             Productos = o.Productos.Select(op => new ProductoDto
             {
                 Id = op.Producto.Id,
