@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ public class ProductosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateProduct([FromBody] Producto producto)
     {
         if (producto == null)
@@ -55,6 +57,7 @@ public class ProductosController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GettAllProducts(int pageNumber = 1, int pageSize = 10)
     {
         if (pageNumber < 1) pageNumber = 1;
@@ -76,6 +79,7 @@ public class ProductosController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> ObtenerPorId(int id)
     {
         var producto = await _context.Productos.FindAsync(id);

@@ -14,7 +14,7 @@ namespace OrdenesApi.Tests.Controllers
         private ApplicationDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString()) // Aislamiento por test
+                .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString()) 
                 .Options;
 
             return new ApplicationDbContext(options);

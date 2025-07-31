@@ -2,6 +2,7 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace OrdenesApi.Controllers;
@@ -20,6 +21,7 @@ public class OrdenesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateOrder([FromBody] CrearOrdenDTO dto)
     {
         if (dto.ProductoIds == null || !dto.ProductoIds.Any())
@@ -77,6 +79,7 @@ public class OrdenesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAllOrders(int pageSize = 10, int pageNumber = 1)
     {
         if (pageSize < 1) pageSize = 10;
@@ -107,6 +110,7 @@ public class OrdenesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> ObtenerOrdenPorId(int id)
     {
         var orden = await _context.Ordenes
@@ -137,6 +141,7 @@ public class OrdenesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> EditarOrden(int id, [FromBody] EditOrderDto dto)
     {
         var orden = await _context.Ordenes
@@ -183,6 +188,7 @@ public class OrdenesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> EliminarOrden(int id)
     {
         var orden = await _context.Ordenes.FindAsync(id);
