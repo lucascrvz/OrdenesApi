@@ -23,17 +23,15 @@ namespace OrdenesApi.Tests.Controllers
         [Fact]
         public async Task CreateProduct_ValidProduct_ReturnsCreated()
         {
-            // Arrange
             var context = GetDbContext();
             var controller = new ProductosController(context);
             var producto = new Producto { Nombre = "Mouse", Precio = 2000 };
 
-            // Act
             var result = await controller.CreateProduct(producto);
 
             // Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(result);
-            var returnedProduct = Assert.IsType<Producto>(createdResult.Value);
+            var returnedProduct = Assert.IsType<ProductoDto>(createdResult.Value);
             Assert.Equal("Mouse", returnedProduct.Nombre);
         }
 
@@ -70,7 +68,7 @@ namespace OrdenesApi.Tests.Controllers
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var productos = Assert.IsAssignableFrom<IEnumerable<Producto>>(okResult.Value);
+            var productos = Assert.IsAssignableFrom<IEnumerable<ProductoDto>>(okResult.Value);
             Assert.Equal(2, System.Linq.Enumerable.Count(productos));
         }
 

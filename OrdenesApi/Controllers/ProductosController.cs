@@ -33,8 +33,13 @@ public class ProductosController : ControllerBase
         {
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(ObtenerPorId), new { id = producto.Id }, producto);
+            var productoDto = new ProductoDto
+            {
+                Id = producto.Id,
+                Nombre = producto.Nombre,
+                Precio = producto.Precio
+            };
+            return CreatedAtAction(nameof(ObtenerPorId), new { id = producto.Id }, productoDto);
         }
         catch (DbUpdateException ex)
         {
