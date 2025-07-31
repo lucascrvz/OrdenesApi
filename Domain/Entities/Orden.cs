@@ -23,7 +23,7 @@ public class Orden
     [Range(0, double.MaxValue, ErrorMessage = "El descuento no puede ser negativo.")]
     public decimal Descuento { get; set; }
 
-    public string TiposDescuento { get; set; } = ""; // Se almacenará como texto (ej: "Monto,Cantidad")
+    public string TiposDescuento { get; set; } = ""; 
 
     public ICollection<OrdenProducto> Productos { get; set; } = new List<OrdenProducto>();
 }

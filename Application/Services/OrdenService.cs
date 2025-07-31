@@ -1,8 +1,11 @@
 using Domain.Entities;
+using System.Collections.Generic;
 
-public class OrdenService
+namespace Application.Services
 {
-    public ResultadoOrden CalcularTotalOrden(List<Producto> productos)
+    public class OrdenService : IOrdenService
+{
+    public ResultadoOrden CalcularTotalOrden(IEnumerable<Producto> productos)
     {
         if (productos == null || !productos.Any())
             throw new ArgumentException("La lista de productos no puede ser nula o vacía.");
@@ -35,5 +38,7 @@ public class OrdenService
             TiposDescuento = tiposDescuento
         };
     }
+
+}
 
 }
