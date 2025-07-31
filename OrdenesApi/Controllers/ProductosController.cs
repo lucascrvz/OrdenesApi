@@ -63,6 +63,8 @@ public class ProductosController : ControllerBase
         if (pageNumber < 1) pageNumber = 1;
         if (pageSize < 1) pageSize = 10;
 
+        var totalItems = await _context.Productos.CountAsync();
+
         var products = await _context.Productos
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
@@ -75,7 +77,16 @@ public class ProductosController : ControllerBase
             Precio = p.Precio
         });
 
-        return Ok(productosDto);
+        var pagedResponse = new PagedResponse<ProductoDto>
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+            Items = productosDto
+        };
+
+        return Ok(pagedResponse);
     }
 
     [HttpGet("{id}")]

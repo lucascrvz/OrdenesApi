@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,8 +37,7 @@ builder.Services.AddAuthorization();
 // Agregar Swagger para documentación de la API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<OrdenService>();
+builder.Services.AddScoped<IOrdenService, OrdenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserService>();
 
@@ -49,8 +49,23 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var retries = 10;
+    var delay = TimeSpan.FromSeconds(5);
+
+    for (int i = 0; i < retries; i++)
+    {
+        try
+        {
+            db.Database.Migrate(); 
+            break; 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Intento {i + 1} de conexión a la DB fallido: {ex.Message}");
+            Thread.Sleep(delay);
+        }
+    }
 }
 
 if (app.Environment.IsDevelopment())

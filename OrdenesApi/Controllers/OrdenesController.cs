@@ -3,7 +3,7 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-
+using Application.Services;
 
 namespace OrdenesApi.Controllers;
 
@@ -12,9 +12,9 @@ namespace OrdenesApi.Controllers;
 public class OrdenesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private readonly OrdenService _ordenService;
+    private readonly IOrdenService _ordenService;
 
-    public OrdenesController(ApplicationDbContext context, OrdenService ordenService)
+    public OrdenesController(ApplicationDbContext context, IOrdenService ordenService)
     {
         _context = context;
         _ordenService = ordenService;
@@ -43,7 +43,7 @@ public class OrdenesController : ControllerBase
             Total = resultado.TotalFinal,
             TotalBruto = resultado.TotalBruto,
             Descuento = resultado.Descuento,
-            TiposDescuento = string.Join(",", resultado.TiposDescuento), // Guardado como string
+            TiposDescuento = string.Join(",", resultado.TiposDescuento),
             Productos = productos.Select(p => new OrdenProducto { ProductoId = p.Id }).ToList()
         };
 
@@ -85,6 +85,8 @@ public class OrdenesController : ControllerBase
         if (pageSize < 1) pageSize = 10;
         if (pageNumber < 1) pageNumber = 1;
 
+        var totalItems = await _context.Ordenes.CountAsync();
+
         var ordenes = await _context.Ordenes
             .Include(o => o.Productos)
                 .ThenInclude(op => op.Producto)
@@ -106,8 +108,18 @@ public class OrdenesController : ControllerBase
             }).ToList()
         });
 
-        return Ok(ordenesDTO);
+        var response = new PagedResponse<OrdenRespuestaDto>
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+            Items = ordenesDTO
+        };
+
+        return Ok(response);
     }
+
 
     [HttpGet("{id}")]
     [Authorize]
@@ -150,12 +162,10 @@ public class OrdenesController : ControllerBase
 
         if (orden == null) return NotFound();
 
-
         try
         {
             if (!string.IsNullOrWhiteSpace(dto.Cliente))
                 orden.Cliente = dto.Cliente;
-
 
             if (dto.ProductoIds != null && dto.ProductoIds.Any())
             {
@@ -165,15 +175,19 @@ public class OrdenesController : ControllerBase
                     .Where(p => dto.ProductoIds.Contains(p.Id))
                     .ToListAsync();
 
-                orden.Total = productos.Sum(p => p.Precio);
-                orden.Productos = productos
-                    .Select(p => new OrdenProducto { ProductoId = p.Id, OrdenId = id })
-                    .ToList();
+                if (productos.Count != dto.ProductoIds.Count)
+                    return BadRequest("Uno o más productos no existen.");
+
+                var resultado = _ordenService.CalcularTotalOrden(productos);
+
+                orden.Total = resultado.TotalFinal;
+                orden.TotalBruto = resultado.TotalBruto;
+                orden.Descuento = resultado.Descuento;
+                orden.TiposDescuento = string.Join(",", resultado.TiposDescuento);
             }
 
             await _context.SaveChangesAsync();
             return Ok(new { mensaje = "Orden actualizada correctamente." });
-
         }
         catch (DbUpdateException ex)
         {
