@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "0bd5be98-fdf8-4c43-9997-270ab5d4bb65",
+		"name": "OrdenesApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29693462"
+	},
+	"item": [
+		{
+			"name": "ProductoController",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/productos?pageNumber=2&pageSize=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"productos"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Nombre\": \"RAM\",\r\n    \"Precio\": 420\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrdenesController",
+			"item": [
+				{
+					"name": "CreateOrder",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cliente\": \"Lucas Cruz\",\r\n  \"productoIds\": [3, 4, 5, 6, 7]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Ordenes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cliente\": \"Juan Pérez\",\r\n  \"productoIds\": [1, 2, 3]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Ordenes?pageSize=10&pageNumber=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Ordenes"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/Ordenes/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Ordenes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/Ordenes/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Ordenes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cliente\": \"Juan Zamora\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Ordenes/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Ordenes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuthController",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Código para el test script de Postman tras hacer login",
+									"",
+									"try {",
+									"    if (pm.response.code === 200 || pm.response.code === 201) {",
+									"        const responseData = pm.response.json();",
+									"",
+									"        // Cambia 'token' si tu respuesta usa otro nombre para el token",
+									"        const tokenFieldName = \"token\";",
+									"",
+									"        if (responseData && responseData[tokenFieldName]) {",
+									"            const token = responseData[tokenFieldName];",
+									"            ",
+									"            // Guarda el token en variable de entorno",
+									"            pm.environment.set(\"auth_token\", \"Bearer \" + token);",
+									"",
+									"            // Opcional: guardar también en variable global si lo prefieres",
+									"            pm.globals.set(\"auth_token\", \"Bearer\" + token);",
+									"",
+									"            console.log(`Token guardado en variable de entorno: ${token}`);",
+									"        } else {",
+									"            console.error(`No se encontró el campo '${tokenFieldName}' en la respuesta.`);",
+									"        }",
+									"    } else {",
+									"        console.error(`Respuesta no exitosa. Código: ${pm.response.code}`);",
+									"    }",
+									"} catch (error) {",
+									"    console.error(\"Error al procesar la respuesta para guardar el token:\", error);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\": \"Lukas\",\r\n    \"Password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Código para el test script de Postman tras hacer login",
+									"",
+									"try {",
+									"    if (pm.response.code === 200 || pm.response.code === 201) {",
+									"        const responseData = pm.response.json();",
+									"",
+									"        // Cambia 'token' si tu respuesta usa otro nombre para el token",
+									"        const tokenFieldName = \"token\";",
+									"",
+									"        if (responseData && responseData[tokenFieldName]) {",
+									"            const token = responseData[tokenFieldName];",
+									"            ",
+									"            // Guarda el token en variable de entorno",
+									"            pm.environment.set(\"auth_token\", \"Bearer \" + token);",
+									"",
+									"            // Opcional: guardar también en variable global si lo prefieres",
+									"            pm.globals.set(\"auth_token\", \"Bearer\" + token);",
+									"",
+									"            console.log(`Token guardado en variable de entorno: ${token}`);",
+									"        } else {",
+									"            console.error(`No se encontró el campo '${tokenFieldName}' en la respuesta.`);",
+									"        }",
+									"    } else {",
+									"        console.error(`Respuesta no exitosa. Código: ${pm.response.code}`);",
+									"    }",
+									"} catch (error) {",
+									"    console.error(\"Error al procesar la respuesta para guardar el token:\", error);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserName\": \"Lukas\",\r\n    \"Password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/Auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
