@@ -24,7 +24,6 @@ public class ProductosController : ControllerBase
             return BadRequest("El Producto enviado es nulo.");
         }
 
-        // Aquí podrías validar el modelo si tienes Data Annotations
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -50,12 +49,25 @@ public class ProductosController : ControllerBase
         }
     }
 
-
     [HttpGet]
-    public async Task<IActionResult> GettAllProducts()
+    public async Task<IActionResult> GettAllProducts(int pageNumber = 1, int pageSize = 10)
     {
-        var productos = await _context.Productos.ToListAsync();
-        return Ok(productos);
+        if (pageNumber < 1) pageNumber = 1;
+        if (pageSize < 1) pageSize = 10;
+
+        var products = await _context.Productos
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var productosDto = products.Select(p => new ProductoDto
+        {
+            Id = p.Id,
+            Nombre = p.Nombre,
+            Precio = p.Precio
+        });
+
+        return Ok(productosDto);
     }
 
     [HttpGet("{id}")]

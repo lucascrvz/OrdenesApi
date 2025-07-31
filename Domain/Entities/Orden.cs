@@ -17,5 +17,14 @@ public class Orden
     [Range(0, double.MaxValue, ErrorMessage = "El total no puede ser negativo.")]
     public decimal Total { get; set; }
 
+    [Range(0, double.MaxValue, ErrorMessage = "El total bruto no puede ser negativo.")]
+    public decimal TotalBruto { get; set; }
+
+    [Range(0, double.MaxValue, ErrorMessage = "El descuento no puede ser negativo.")]
+    public decimal Descuento { get; set; }
+
+    public string TiposDescuento { get; set; } = ""; // Se almacenará como texto (ej: "Monto,Cantidad")
+
     public ICollection<OrdenProducto> Productos { get; set; } = new List<OrdenProducto>();
 }
+
