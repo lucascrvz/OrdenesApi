@@ -45,6 +45,20 @@ namespace Infrastructure.Data
                       .IsRequired()
                       .HasMaxLength(100);
             });
+
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Username = "lucas", Password = "AQAAAAIAAYagAAAAEDE9Oywd5hn0dOFGuGfVHkA+DRrGiDJhOmEevDij34hRcWpAYZ9I8IulporLriXUsw==" }
+            );
+            
+            modelBuilder.Entity<Producto>().HasData(
+                new Producto { Id = 1, Nombre = "Monitor", Precio = 100 },
+                new Producto { Id = 2, Nombre = "Teclado", Precio = 50 },
+                new Producto { Id = 3, Nombre = "Mouse", Precio = 25 },
+                new Producto { Id = 4, Nombre = "Notebook", Precio = 800 },
+                new Producto { Id = 5, Nombre = "Impresora", Precio = 200 },
+                new Producto { Id = 6, Nombre = "Escáner", Precio = 150 },
+                new Producto { Id = 7, Nombre = "Webcam", Precio = 75 }
+            );
         }
     }
 }
